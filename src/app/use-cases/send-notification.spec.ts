@@ -15,5 +15,6 @@ describe('Enviar notificação',()=>{
         })
 
         expect(notificationRepositories.notifications).toHaveLength(1);
+        expect(notificationRepositories.notifications[0]).toEqual(notification)
     })
 })
