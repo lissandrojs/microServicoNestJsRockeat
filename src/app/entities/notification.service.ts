@@ -1,4 +1,6 @@
 import { Content } from "./content.service";
+import { Replace } from "src/helpers/Replace";
+
 
 export interface INotificationData{
     recipienteId:string;
@@ -11,8 +13,12 @@ export interface INotificationData{
 export class Notification {
     private data: INotificationData;
 
-    constructor(data:INotificationData){
-        this.data = data;
+    constructor(data:Replace<INotificationData,{createdAt?:Date}>){
+        this.data = {
+            ...data,
+            createdAt:data.createdAt ?? new Date()
+        }
+        
     }
 
     public get recipienteId():string{
