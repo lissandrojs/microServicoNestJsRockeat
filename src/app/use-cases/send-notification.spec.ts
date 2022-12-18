@@ -1,8 +1,12 @@
+import { InMemoryNotificationsRepository } from "../../../test/in-memory-notification-repositories";
 import {  SendNotification } from "./send-notification";
+
 
 describe('Enviar notificação',()=>{
     it('verificar se a notificação esta sendo enviada', async () =>{
-        const sendNotification = new SendNotification()
+       
+        const notificationRepositories = new InMemoryNotificationsRepository()
+        const sendNotification = new SendNotification(notificationRepositories)
 
         const {notification} = await sendNotification.execute({
             content:"notificação de novo emprego",
@@ -10,6 +14,6 @@ describe('Enviar notificação',()=>{
             recipienteId:"novo emprego , na empresa que preocupa com o nosso bem estar"
         })
 
-        expect(notification).toBeTruthy();
+        expect(notificationRepositories.notifications).toHaveLength(1);
     })
 })
