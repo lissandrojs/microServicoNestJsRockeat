@@ -1,6 +1,6 @@
 import { Content } from "./content.service";
 import { Replace } from "src/helpers/Replace";
-
+import { randomUUID } from "node:crypto";
 
 export interface INotificationData{
     recipienteId:string;
@@ -11,15 +11,21 @@ export interface INotificationData{
 }
 
 export class Notification {
+    private _id :string;
     private data: INotificationData;
 
     constructor(data:Replace<INotificationData,{createdAt?:Date}>){
+        this._id = randomUUID()
         this.data = {
             ...data,
             createdAt:data.createdAt ?? new Date()
         }
         
     }
+    public get id():string{
+        return this._id;
+    }
+
 
     public get recipienteId():string{
         return this.data.recipienteId;
